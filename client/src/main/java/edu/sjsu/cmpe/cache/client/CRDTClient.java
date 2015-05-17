@@ -4,16 +4,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CRDTClient {
-
-    public static void main(String[] args) throws Exception {
-        System.out.println("Starting Cache Client...");
-        CacheServiceInterface cache1 = new DistributedCacheService(
-                "http://localhost:3000");
-        CacheServiceInterface cache2 = new DistributedCacheService(
-                "http://localhost:3001");
-        CacheServiceInterface cache3 = new DistributedCacheService(
-                "http://localhost:3002");
-        
+    public static void readOnRepair(CacheServiceInterface param1, CacheServiceInterface param2, 
+    		CacheServiceInterface param3) throws Exception {
+    	CacheServiceInterface cache1  = param1;
+    	CacheServiceInterface cache2  = param2;
+    	CacheServiceInterface cache3  = param3;
+    	
         long key = 1;
         String value = "a";
         

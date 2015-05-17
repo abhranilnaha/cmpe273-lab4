@@ -8,16 +8,33 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
 
 public class Client {
-
-    public static void main(String[] args) throws Exception {
-        System.out.println("Starting Cache Client...");
-        CacheServiceInterface cache1 = new DistributedCacheService(
-                "http://localhost:3000");
-        CacheServiceInterface cache2 = new DistributedCacheService(
-                "http://localhost:3001");
-        CacheServiceInterface cache3 = new DistributedCacheService(
-                "http://localhost:3002");
-        
+	private static CacheServiceInterface cache1 = null;
+	private static CacheServiceInterface cache2 = null;
+	private static CacheServiceInterface cache3 = null;
+	
+    public static void main(String[] args) {
+    	try {
+    		System.out.println("Starting Cache Client...");
+    		
+            cache1 = new DistributedCacheService("http://localhost:3000");
+            cache2 = new DistributedCacheService("http://localhost:3001");
+            cache3 = new DistributedCacheService("http://localhost:3002");
+            
+	    	if (args.length > 0) {
+	    		if (args[0].equals("write")) {
+	    			write();
+	    		} else if (args[0].equals("read")) {
+	    			CRDTClient.readOnRepair(cache1, cache2, cache3);
+	    		}
+	    	}
+	    	
+	    	System.out.println("Exiting Cache Client...");
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}        
+    }
+    
+    public static void write() throws Exception {       
         long key = 1;
         String value = "a";
         
