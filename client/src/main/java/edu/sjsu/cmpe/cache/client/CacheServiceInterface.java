@@ -1,11 +1,20 @@
 package edu.sjsu.cmpe.cache.client;
 
+import java.util.concurrent.Future;
+
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+
 /**
  * Cache Service Interface
  * 
  */
 public interface CacheServiceInterface {
-    public String get(long key);
+    public Future<HttpResponse<JsonNode>> get(long key);
+    
+    public Future<HttpResponse<JsonNode>> delete(long key);
 
-    public void put(long key, String value);
+    public Future<HttpResponse<JsonNode>> put(long key, String value);
+    
+    public String getValue();
 }

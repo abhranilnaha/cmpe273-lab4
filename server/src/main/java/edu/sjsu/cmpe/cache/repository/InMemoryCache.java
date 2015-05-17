@@ -20,9 +20,16 @@ public class InMemoryCache implements CacheInterface {
     @Override
     public Entry save(Entry newEntry) {
         checkNotNull(newEntry, "newEntry instance must not be null");
-        inMemoryMap.putIfAbsent(newEntry.getKey(), newEntry);
+        inMemoryMap.put(newEntry.getKey(), newEntry);
 
         return newEntry;
+    }
+    
+    @Override
+    public Entry delete(Long key) {
+        checkArgument(key > 0,
+                "Key was %s but expected greater than zero value", key);
+        return inMemoryMap.remove(key);
     }
 
     @Override
